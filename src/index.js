@@ -157,6 +157,7 @@ function getWelcomeResponse(callback) {
         "elements that start with the last letter of the previously named element.  For example " +
         "if I were to say Oxygen, you could say Nitrogen, because oxygen ends with the letter N." +
         " Let's begin.",
+        repromptText,
         shouldEndSession = false;
 
     // Pick the first letter to use for the first element
