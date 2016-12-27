@@ -191,6 +191,7 @@ function handleAnswerRequest(intent, session, callback) {
     var userGaveUp = intent.name === "DontKnowIntent";
     var notRepeat = validAnswer ? isNewElement(session.attributes,intent.slots.Answer.value) === 0 : false;
     var matchEndAndStart = validAnswer ? matchingLetters(session.attributes.lastElement,intent.slots.Answer.value) : false;
+    var reprompt = "";
 
     if (!gameInProgress) {
         // If the user responded with an answer but there is no game in progress, ask the user
@@ -202,7 +203,7 @@ function handleAnswerRequest(intent, session, callback) {
     } else if (!validAnswer && !userGaveUp) {
         // If the user provided answer isn't a valid element,
         // return an error message to the user. Remember to guide the user into providing correct values.
-        var reprompt = session.attributes.speechOutput;
+        reprompt = session.attributes.speechOutput;
         var speechOutput = "Your answer must be a valid element.  " + reprompt;
         callback(session.attributes,
             buildSpeechletResponse(CARD_TITLE, speechOutput, reprompt, false));
@@ -392,7 +393,7 @@ function generateAlexaResponse(attributes, element, speechOutput, newSessionAttr
     sessionAttributes.lastElement = elementOpt;
     sessionAttributes.alexaElements.push(elementOpt);
     callback(sessionAttributes,
-        buildSpeechletResponseWithoutCard(speechOutput, repromptText, false));
+        buildSpeechletResponseWithoutCard(speechOutput, speechOutput, false));
   }
 
 }
