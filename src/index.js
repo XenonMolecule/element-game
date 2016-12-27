@@ -227,7 +227,7 @@ function handleAnswerRequest(intent, session, callback) {
                 "yourElements": yourElements.push(intent.slots.Answer.value),
                 "lastElement" : lastElement
             };
-            generateAlexaResponse(session.attributes, intent.slots.Answer.value, repromptText, sessionAttributes);
+            generateAlexaResponse(session.attributes, intent.slots.Answer.value, repromptText, sessionAttributes, callback);
         } else {
           var repromptText = "";
           // if they didn't give up it was a good try
@@ -361,7 +361,7 @@ function matchingLetters(oldElement, newElement){
   return lastChar === firstChar;
 }
 
-function generateAlexaResponse(attributes, element, speechOutput, newSessionAttributes) {
+function generateAlexaResponse(attributes, element, speechOutput, newSessionAttributes, callback) {
   //get the last letter of the past element
   var letter = element.charCodeAt(element.length-1)-97;
   var elementOpts = elements[letter]; // The element list is organized in alphabetical order
