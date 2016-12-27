@@ -156,7 +156,7 @@ function getWelcomeResponse(callback) {
         speechOutput = "I will start by naming an element, and we will go back and forth naming " +
         "elements that start with the last letter of the previously named element.  For example " +
         "if I were to say Oxygen, you could say Nitrogen, because oxygen ends with the letter N." +
-        " Let's begin.",
+        "  Let's begin.",
         repromptText,
         shouldEndSession = false;
 
