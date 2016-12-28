@@ -383,8 +383,8 @@ function generateAlexaResponse(attributes, element, speechOutput, newSessionAttr
   if(elementOpt === ""){
     // The user has won, there are no other options
     speechOutput += "  Wow I am stumped.  Good game.  You had a score of " + attributes.score + ".";
-    callback(session.attributes,
-        buildSpeechletResponseWithEndCard(CARD_TITLE, speechOutput, "", true, session.attributes));
+    callback(attributes,
+        buildSpeechletResponseWithEndCard(CARD_TITLE, speechOutput, "", true, attributes));
   } else {
     // Send over the new element
     speechOutput += "  How about " + elementOpt + ".";
