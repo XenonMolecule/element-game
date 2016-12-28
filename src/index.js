@@ -220,12 +220,13 @@ function handleAnswerRequest(intent, session, callback) {
         if (validAnswer && notRepeat && matchEndAndStart) {
             currentScore++;
             var repromptText = "Good answer."
+            yourElements.push(intent.slots.Answer.value);
             sessionAttributes = {
                 "speechOutput": repromptText,
                 "repromptText": repromptText,
                 "score": currentScore,
                 "alexaElements": alexaElements,
-                "yourElements": yourElements.push(intent.slots.Answer.value),
+                "yourElements": yourElements,
                 "lastElement" : lastElement
             };
             generateAlexaResponse(session.attributes, intent.slots.Answer.value, repromptText, sessionAttributes, callback);
