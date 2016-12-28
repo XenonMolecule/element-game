@@ -189,8 +189,8 @@ function handleAnswerRequest(intent, session, callback) {
     var gameInProgress = session.attributes && session.attributes.alexaElements;
     var validAnswer = isAnswerValidElement(intent);
     var userGaveUp = intent.name === "DontKnowIntent";
-    var notRepeat = validAnswer ? isNewElement(session.attributes,intent.slots.Answer.value) === 0 : false;
-    var matchEndAndStart = validAnswer ? matchingLetters(session.attributes.lastElement,intent.slots.Answer.value) : false;
+    var notRepeat = validAnswer && (isNewElement(session.attributes,intent.slots.Answer.value) === 0);
+    var matchEndAndStart = validAnswer && (matchingLetters(session.attributes.lastElement,intent.slots.Answer.value));
     var reprompt = "";
 
     if (!gameInProgress) {
@@ -206,7 +206,7 @@ function handleAnswerRequest(intent, session, callback) {
         reprompt = session.attributes.speechOutput;
         var speechOutput = "Your answer must be a valid element.  " + reprompt;
         callback(session.attributes,
-            buildSpeechletResponse(CARD_TITLE, speechOutput, reprompt, false));
+            buildSpeechletResponseWithoutCard(speechOutput, reprompt, false));
     } else {
         var currentScore = parseInt(session.attributes.score),
             alexaElements = session.attributes.alexaElements,
@@ -271,7 +271,7 @@ function handleAnswerRequest(intent, session, callback) {
 
            // End the game
            callback(session.attributes,
-               buildSpeechletResponseWithEndCard(CARD_TITLE, speechOutput, "", true, session.attributes));
+               buildSpeechletResponseWithEndCard(CARD_TITLE, repromptText, "", true, session.attributes));
 
         }
     }
@@ -332,6 +332,7 @@ function isAnswerValidElement(intent) {
       }
     }
   }
+  console.log(elements);
   return false;
 }
 
@@ -366,7 +367,7 @@ function matchingLetters(oldElement, newElement){
 function generateAlexaResponse(attributes, element, speechOutput, newSessionAttributes, callback) {
   //get the last letter of the past element
   var letter = element.charCodeAt(element.length-1)-97;
-  var elementOpts = elements[letter]; // The element list is organized in alphabetical order
+  var elementOpts = elements[letter].slice(); // The element list is organized in alphabetical order
   var elementOpt = "";
   var length = elementOpts.length; // The length will change, but this variable will not
   //choose random element that fits the criteria of first letter matching the last letter of past element
@@ -394,7 +395,7 @@ function generateAlexaResponse(attributes, element, speechOutput, newSessionAttr
     sessionAttributes.lastElement = elementOpt;
     sessionAttributes.alexaElements.push(elementOpt);
     callback(sessionAttributes,
-        buildSpeechletResponseWithoutCard(speechOutput, speechOutput, false));
+        buildSpeechletResponseWithoutCard(speechOutput, "  How about " + elementOpt + ".", false));
   }
 
 }
