@@ -253,7 +253,7 @@ function handleAnswerRequest(intent, session, callback) {
           }
 
           // if it was a repeat AND the endings don't match
-          if(!matchEndAndStart) {
+          if(!matchEndAndStart && !notRepeat) {
             repromptText += "  Also, the first letter of " + intent.slots.Answer.value +
             " is not the same as the last letter of " + lastElement + ".";
            }
