@@ -380,7 +380,7 @@ function generateAlexaResponse(attributes, element, speechOutput, newSessionAttr
       break;
     }
   }
-  if(elementOpts === ""){
+  if(elementOpt === ""){
     // The user has won, there are no other options
     speechOutput += "  Wow I am stumped.  Good game.  You had a score of " + attributes.score + ".";
     callback(session.attributes,
